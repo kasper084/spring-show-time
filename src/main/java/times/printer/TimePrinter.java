@@ -8,17 +8,20 @@ import java.time.format.DateTimeFormatter;
 
 @Component
 public class TimePrinter {
-    private static int stopper = 5;
+    private static int scheduleStopper = 5;
     private static final int MIN_NUM = 0;
 
     @Scheduled(cron = "*/2 * * * * *")
     public void print() {
-        if (stopper > MIN_NUM) getTime();
-        else System.exit(0);
+        if (scheduleStopper > MIN_NUM) {
+            printCurrentTime();
+        } else {
+            System.exit(0);
+        }
     }
 
-    private void getTime() {
+    private void printCurrentTime() {
         System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("E, dd MMM yyyy HH:mm:ss")));
-        stopper--;
+        scheduleStopper--;
     }
 }
